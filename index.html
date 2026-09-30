@@ -30,6 +30,13 @@
       position: relative;
       transition: all 0.3s ease;
     }
+    .card img.intro-img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin: 15px 0 20px 0;
+    }
     h1, h2 {
       color: #ff4d6d;
       margin-bottom: 20px;
@@ -103,7 +110,6 @@
     .text-input:focus {
       border-color: #ff4d6d;
     }
-    /* Uskakujúce tlačidlá */
     .final-btn-container {
       display: flex;
       justify-content: center;
@@ -120,7 +126,6 @@
       width: auto;
       position: absolute;
     }
-    /* Uskakujúca Barbie možnosť */
     #barbie-container {
       transition: all 0.2s ease;
       z-index: 10;
@@ -134,7 +139,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(4px);
       justify-content: center;
       align-items: center;
@@ -152,7 +157,7 @@
     }
     .modal-card img {
       width: 100%;
-      max-height: 220px;
+      max-height: 230px;
       object-fit: cover;
       border-radius: 14px;
       margin-bottom: 15px;
@@ -170,11 +175,11 @@
     <!-- 1. OBRAZOVKA: Úvod -->
     <div id="screen-intro" class="screen active">
       <h1>Ako prežijeme tvoj narodeninový deň? 🎂🎈</h1>
-      <p>Pripravil som pre teba špeciálny plánovač. Tvojou úlohou je vybrať si zo všetkých možností tie najlepšie!</p>
-      <button class="btn" onclick="startPlanner()">Poďme to zistiť! 🚀</button>
+      <img src="uvod1.jpg" alt="Úvodná fotka" class="intro-img">
+      <button class="btn" onclick="startPlanner()">Poďme to spolu zistiť! 🚀</button>
     </div>
 
-    <!-- 2. OBRAZOVKA: Hlavný rozcestník (5 sekcií) -->
+    <!-- 2. OBRAZOVKA: Hlavný rozcestník -->
     <div id="screen-hub" class="screen">
       <h2>Vyber si kategóriu 🎯</h2>
       <p id="hub-desc">Klikni na položku a zvoľ si svoju preferenciu:</p>
@@ -182,12 +187,12 @@
         <button id="btn-movie" class="btn" onclick="showScreen('screen-movie')">🎬 Film</button>
         <button id="btn-dinner" class="btn" onclick="showScreen('screen-dinner')">🍕 Jedlo</button>
         <button id="btn-cake" class="btn" onclick="showScreen('screen-cake')">🍰 Koláč</button>
-        <button id="btn-massage" class="btn" onclick="showScreen('screen-massage')">💆‍♂️ Masáž</button>
+        <button id="btn-massage" class="btn" onclick="showScreen('screen-massage')">💆‍♂️ Relax</button>
         <button id="btn-trip" class="btn" onclick="showScreen('screen-trip')">🗺️ Výlet</button>
       </div>
     </div>
 
-    <!-- KATEGÓRIA 1: FILM (S uskakujúcim Barbie filmom) -->
+    <!-- KATEGÓRIA 1: FILM -->
     <div id="screen-movie" class="screen">
       <h2>Aký film si pozrieme? 🍿</h2>
       <div class="option-list" id="movie-options">
@@ -204,7 +209,7 @@
       <button class="btn" onclick="saveMovieChoice('btn-movie')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- KATEGÓRIA 2: JEDLO (S textovým vstupom) -->
+    <!-- KATEGÓRIA 2: JEDLO -->
     <div id="screen-dinner" class="screen">
       <h2>Čo by si si dala na jedlo? 🍷</h2>
       <p>Zadaj, čo máš najradšej:</p>
@@ -215,37 +220,31 @@
     <!-- KATEGÓRIA 3: KOLÁČ -->
     <div id="screen-cake" class="screen">
       <h2>Aký narodeninový koláč? 🎂</h2>
-      <div class="option-list">
-        <label class="option-item"><input type="radio" name="cake" value="Čokoládový dream" checked> Čokoládová bomba</label>
-        <label class="option-item"><input type="radio" name="cake" value="Cheesecake"> Ovocný Cheesecake</label>
-        <label class="option-item"><input type="radio" name="cake" value="Tradičná torta"> Tradičná torta od babky/cukrára</label>
-        <label class="option-item"><input type="radio" name="cake" value="Veterníky/Minitorty"> Zákusky / Veterníky</label>
-      </div>
-      <button class="btn" onclick="saveChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
+      <p>Zadaj, aký chceš koláč:</p>
+      <input type="text" id="cake-preference" class="text-input" placeholder="Napr. Makrónky, Cheesecake..." value="Makrónka">
+      <button class="btn" style="margin-top:20px;" onclick="saveCakeChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- KATEGÓRIA 4: MASÁŽ -->
+    <!-- KATEGÓRIA 4: RELAX (MASÁŽ) -->
     <div id="screen-massage" class="screen">
       <h2>Aké relaxačné combo? 💆‍♀️</h2>
       <div class="option-list">
-        <label class="option-item"><input type="radio" name="massage" value="Chrbat a šija" checked> Masáž chrbta a šije</label>
-        <label class="option-item"><input type="radio" name="massage" value="Masáž chodidiel"> Masáž chodidiel po celom dni</label>
-        <label class="option-item"><input type="radio" name="massage" value="Kompletná wellness masáž"> Kompletná masáž celého tela</label>
-        <label class="option-item"><input type="radio" name="massage" value="Škrabkanie na hlave"> 30 minút čistého škrabkania vo vlasoch</label>
+        <label class="option-item"><input type="radio" name="massage" value="Masáž chrbta" checked> Masáž chrbta</label>
+        <label class="option-item"><input type="radio" name="massage" value="Masáž hlavy"> Masáž hlavy</label>
+        <label class="option-item"><input type="radio" name="massage" value="Masáž nôh"> Masáž nôh</label>
+        <label class="option-item" id="all-massage-btn" onmouseover="hideAllMassage()" onclick="hideAllMassage()">
+          <input type="radio" name="massage" value="Masáž všetkého"> Masáž všetkého ✨
+        </label>
       </div>
-      <button class="btn" onclick="saveChoice('btn-massage')">Uložiť a vrátiť sa ↩️</button>
+      <button class="btn" onclick="saveRelaxChoice('btn-massage')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
     <!-- KATEGÓRIA 5: VÝLET -->
     <div id="screen-trip" class="screen">
-      <h2>Kam vyrazíme na výlet? 🌲🏞️</h2>
-      <div class="option-list">
-        <label class="option-item"><input type="radio" name="trip" value="Prechádzka v prírode" checked> Prechádzka v prírode / Vyhliadka</label>
-        <label class="option-item"><input type="radio" name="trip" value="Návšteva hrady/zámku"> Návšteva hradu alebo zámku</label>
-        <label class="option-item"><input type="radio" name="trip" value="Wellness & Spa deň"> Wellness & Spa oddych</label>
-        <label class="option-item"><input type="radio" name="trip" value="Mestský trip & kaviarničky"> Mestský trip & kaviarničky</label>
-      </div>
-      <button class="btn" onclick="saveChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
+      <h2>Cieľ dobrodružstva 🌲🏞️</h2>
+      <p>Kam vyrazíme na výlet?</p>
+      <input type="text" id="trip-preference" class="text-input" placeholder="Napr. Do prírody, na hrad..." value="Tajný výlet">
+      <button class="btn" style="margin-top:20px;" onclick="saveTripChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
     <!-- 3. ZÁVEREČNÁ OBRAZOVKA -->
@@ -254,11 +253,10 @@
       <p>Vybral/a si si úžasné combo. Súhlasíš s tým, že takto prežijeme tvoj deň?</p>
 
       <form id="birthdayForm" action="https://formspree.io/f/myezoola" method="POST">
-        <!-- Skryté vstupy na odoslanie -->
         <input type="hidden" name="Film" id="input-movie">
         <input type="hidden" name="Jedlo" id="input-dinner">
         <input type="hidden" name="Kolac" id="input-cake">
-        <input type="hidden" name="Masaz" id="input-massage">
+        <input type="hidden" name="Relax" id="input-massage">
         <input type="hidden" name="Vylet" id="input-trip">
 
         <div class="final-btn-container">
@@ -281,53 +279,52 @@
     <div class="modal-card">
       <img id="modal-img" src="" alt="Obrázok">
       <h3 id="modal-text" style="color:#ff4d6d; margin-bottom:20px;"></h3>
-      <button class="btn" onclick="closeModal()">Rozumiem! 👍</button>
+      <button id="modal-btn" class="btn" onclick="closeModal()">Pokračovať 👍</button>
     </div>
   </div>
 
   <script>
-    let remainingCategories = 5; // Terraz máme 5 kategórií
+    let remainingCategories = 5;
     let pendingButtonId = null;
     let isIntroModal = false;
+    let isTripModal = false;
 
-    // Funkcia na prepínanie obrazoviek
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
     }
 
-    // Úvodné tlačidlo - zobrazí fotku a napíše "Začína dobrodružstvo"
+    // 1. Úvodný pop-up
     function startPlanner() {
-      // Ak nahráš fotku na GitHub, zmeň napr. na 'uvod.jpg'
-      const imgUrl = 'uvod.jpg'; 
-      const text = 'Začína dobrodružstvo 🚀🔥';
-      
       isIntroModal = true;
-      showModal(imgUrl, text, null);
+      showModal('uvod2.jpg', 'Bude to dobrodružstvo 🚀', 'Zahájiť dobrodružstvo', null);
     }
 
-    // Funkcia pre zobrazenie vlastného pop-up okna
-    function showModal(imageSrc, text, buttonId) {
+    // Funkcia na zobrazenie modálneho okna
+    function showModal(imageSrc, text, btnText, buttonId) {
       pendingButtonId = buttonId;
       document.getElementById('modal-img').src = imageSrc;
       document.getElementById('modal-text').innerText = text;
+      document.getElementById('modal-btn').innerText = btnText || 'Pokračovať 👍';
       document.getElementById('custom-modal').style.display = 'flex';
     }
 
-    // Zavretie pop-upu
     function closeModal() {
       document.getElementById('custom-modal').style.display = 'none';
       
       if (isIntroModal) {
         isIntroModal = false;
-        showScreen('screen-hub'); // Presmerovanie na kategórie
+        showScreen('screen-hub');
+      } else if (isTripModal) {
+        isTripModal = false;
+        saveChoice(pendingButtonId);
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
       }
     }
 
-    // Uskakujúci Barbie film
+    // Barbie uskakuje
     function moveBarbie() {
       const barbie = document.getElementById('barbie-container');
       const x = Math.random() * (window.innerWidth - barbie.offsetWidth - 40);
@@ -338,29 +335,46 @@
       barbie.style.top = `${Math.max(20, y)}px`;
     }
 
-    // Špeciálne uloženie pre FILM (s fotkou / GIFom)
+    // Miznutie "Masáž všetkého"
+    function hideAllMassage() {
+      const btn = document.getElementById('all-massage-btn');
+      btn.style.display = 'none';
+    }
+
+    // FILM
     function saveMovieChoice(buttonId) {
-      const imgUrl = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzE1YzhhNGsyeGs2dnRwYjA3dXg3ZjFqYWk3MXMwa282ZXBsa2Y0OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif';
-      const text = 'Šak vieš, že si pozrieme oboje! 😉🎬';
-      showModal(imgUrl, text, buttonId);
+      showModal('film.jpg', 'Aj tak sa pozrieme na obe.', '😉', buttonId);
     }
 
-    // Špeciálne uloženie pre JEDLO (s fotkou sushi)
+    // JEDLO (Koláž)
     function saveFoodChoice(buttonId) {
-      const imgUrl = 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500';
-      const text = 'Aj tak dáme sushi v Českej Lípe! 🍣😋';
-      showModal(imgUrl, text, buttonId);
+      showModal('kolaz.jpg', 'Aj tak dáme sushi v Českej Lípe! 🍣😋', 'Super! 😋', buttonId);
     }
 
-    // Uloženie výberu a skrytie tlačidla z hlavného menu
+    // KOLÁČ
+    function saveCakeChoice(buttonId) {
+      showModal('kolac.jpg', 'Ja viem, že chceš ten jeden', 'Makrónka 🧁', buttonId);
+    }
+
+    // RELAX
+    function saveRelaxChoice(buttonId) {
+      showModal('relax.jpg', 'Bude všetko, ale asi nie na jeden ťah 😉', '😘', buttonId);
+    }
+
+    // VÝLET (GIF)
+    function saveTripChoice(buttonId) {
+      isTripModal = true;
+      showModal('vylet.gif', 'Ideme objavovať svet! 🗺️✨', 'Ísť na finále 🚀', buttonId);
+    }
+
+    // Uloženie výberu a skrytie tlačidla z rozcestníka
     function saveChoice(buttonId) {
       const btn = document.getElementById(buttonId);
       if (btn && btn.style.display !== 'none') {
-        btn.style.display = 'none'; // Tlačidlo zmizne!
+        btn.style.display = 'none';
         remainingCategories--;
       }
 
-      // Ak už nezostalo žiadne tlačidlo, otvorí sa finálna obrazovka
       if (remainingCategories === 0) {
         collectData();
         showScreen('screen-final');
@@ -369,16 +383,16 @@
       }
     }
 
-    // Zozbieranie vybraných možností do formulára
+    // Zozbieranie údajov
     function collectData() {
       document.getElementById('input-movie').value = 'Pán prsteňov + Barbie film';
-      document.getElementById('input-dinner').value = 'Sushi v Českej Lípe (Pôvodne zadané: ' + (document.getElementById('food-preference').value || 'Nič') + ')';
-      document.getElementById('input-cake').value = document.querySelector('input[name="cake"]:checked')?.value || 'Nezvolené';
-      document.getElementById('input-massage').value = document.querySelector('input[name="massage"]:checked')?.value || 'Nezvolené';
-      document.getElementById('input-trip').value = document.querySelector('input[name="trip"]:checked')?.value || 'Nezvolené';
+      document.getElementById('input-dinner').value = 'Sushi v Českej Lípe (Zadané: ' + (document.getElementById('food-preference').value || 'Nič') + ')';
+      document.getElementById('input-cake').value = 'Makrónka (Zadané: ' + (document.getElementById('cake-preference').value || 'Nič') + ')';
+      document.getElementById('input-massage').value = document.querySelector('input[name="massage"]:checked')?.value || 'Masáž všetkého';
+      document.getElementById('input-trip').value = document.getElementById('trip-preference').value || 'Tajný výlet';
     }
 
-    // Funkcia pre utekajúce tlačidlo NIE na konci
+    // Utekajúce NIE
     function moveButton() {
       const noBtn = document.getElementById('noBtn');
       const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
@@ -389,7 +403,7 @@
       noBtn.style.top = `${Math.max(20, y)}px`;
     }
 
-    // Odoslanie formulára cez Formspree na e-mail
+    // Formspree odoslanie
     const form = document.getElementById('birthdayForm');
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
