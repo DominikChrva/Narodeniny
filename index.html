@@ -126,7 +126,7 @@
       z-index: 10;
     }
 
-    /* VLASTNÉ VYSKAKOVACIE OKNO (MODAL) */
+    /* VYSKAKOVACIE OKNO (MODAL) */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -171,7 +171,7 @@
     <div id="screen-intro" class="screen active">
       <h1>Ako prežijeme tvoj narodeninový deň? 🎂🎈</h1>
       <p>Pripravil som pre teba špeciálny plánovač. Tvojou úlohou je vybrať si zo všetkých možností tie najlepšie!</p>
-      <button class="btn" onclick="showScreen('screen-hub')">Poďme to zistiť! 🚀</button>
+      <button class="btn" onclick="startPlanner()">Poďme to zistiť! 🚀</button>
     </div>
 
     <!-- 2. OBRAZOVKA: Hlavný rozcestník -->
@@ -220,7 +220,7 @@
         <label class="option-item"><input type="radio" name="cake" value="Tradičná torta"> Tradičná torta od babky/cukrára</label>
         <label class="option-item"><input type="radio" name="cake" value="Veterníky/Minitorty"> Zákusky / Veterníky</label>
       </div>
-      <button class="btn" onclick="saveChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
+      <button class="btn" onclick="saveChoice('btn-cake')">Uložiť a vrátiť sa ↩️️</button>
     </div>
 
     <!-- KATEGÓRIA 4: MASÁŽ -->
@@ -262,7 +262,7 @@
 
   </div>
 
-  <!-- VYSKAKOVACIE OKNO NAVYŠE (MODAL) -->
+  <!-- VYSKAKOVACIE OKNO (MODAL) -->
   <div id="custom-modal" class="modal-overlay">
     <div class="modal-card">
       <img id="modal-img" src="" alt="Obrázok">
@@ -274,11 +274,22 @@
   <script>
     let remainingCategories = 4;
     let pendingButtonId = null;
+    let isIntroModal = false;
 
     // Funkcia na prepínanie obrazoviek
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
+    }
+
+    // Úvodné tlačidlo - zobrazí fotku a pripraví prechod na rozcestník
+    function startPlanner() {
+      // TU ZMEŇ NÁZOV SÚBORU FOTKY (napr. 'uvod.jpg' alebo internetovú URL)
+      const imgUrl = 'uvod.jpg'; 
+      const text = 'Priprav sa, dnes to bude jazda! 🚀🔥';
+      
+      isIntroModal = true;
+      showModal(imgUrl, text, null);
     }
 
     // Funkcia pre zobrazenie vlastného pop-up okna
@@ -289,10 +300,14 @@
       document.getElementById('custom-modal').style.display = 'flex';
     }
 
-    // Zavretie pop-upu a uloženie voľby
+    // Zavretie pop-upu
     function closeModal() {
       document.getElementById('custom-modal').style.display = 'none';
-      if (pendingButtonId) {
+      
+      if (isIntroModal) {
+        isIntroModal = false;
+        showScreen('screen-hub'); // Presmerovanie na kategórie
+      } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
       }
