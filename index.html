@@ -191,6 +191,7 @@
     <!-- 2. OBRAZOVKA: Hlavný rozcestník -->
     <div id="screen-hub" class="screen">
       <h2>Vyber si kategóriu 🎯</h2>
+      <p id="hub-desc">Klikni na položku a zvoľ si svoju preferenciu:</p>
       <div class="grid-menu">
         <button id="btn-movie" class="btn" onclick="showScreen('screen-movie')">🎬 Film</button>
         <button id="btn-dinner" class="btn" onclick="showScreen('screen-dinner')">🍕 Jedlo</button>
@@ -235,7 +236,7 @@
 
     <!-- KATEGÓRIA 4: RELAX -->
     <div id="screen-massage" class="screen">
-      <h2>Aké relaxačné combo? 💆‍♀️</h2>
+      <h2>Aké relaxačné combo? 💆‍♀️️</h2>
       <div class="option-list">
         <label class="option-item"><input type="radio" name="massage" value="Masáž chrbta" checked> Masáž chrbta</label>
         <label class="option-item"><input type="radio" name="massage" value="Masáž hlavy"> Masáž hlavy</label>
@@ -270,7 +271,7 @@
 
         <div class="cars-grid">
           <div class="car-card">
-            <img src="fabia.png" alt="Pistáciová Fabia">
+            <img src="fabia.jpg" alt="Pistáciová Fabia">
             <button type="button" class="btn" style="background-color: #2ec4b6; font-size: 15px; padding: 10px;" onclick="handleCarSelection('Pistáciová Fabia')">💚 Pistáciová Fabia</button>
           </div>
 
@@ -335,7 +336,7 @@
         saveChoice(pendingButtonId);
       } else if (isCarModal) {
         isCarModal = false;
-        submitBirthdayForm();
+        submitBirthdayForm(); // Priamo odošle formulár a zobrazí finálnu obrazovku!
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
