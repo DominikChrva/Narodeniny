@@ -30,7 +30,6 @@
       position: relative;
       transition: all 0.3s ease;
     }
-    /* PLNÁ KVALITA A OSTRÝ ZOBRAZ PRE OBRÁZKY */
     .card img.intro-img {
       width: 100%;
       max-height: 320px;
@@ -112,7 +111,6 @@
       border-color: #ff4d6d;
     }
 
-    /* MIEŠKA PRE VÝBER VOZIDIEL (2 STĹPCE) */
     .cars-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -138,25 +136,11 @@
       background: #fff;
     }
 
-    .final-btn-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
-      min-height: 50px;
-      position: relative;
-    }
-    #noBtn {
-      background-color: #ff2052;
-      width: 100%;
-      margin-top: 10px;
-    }
     #barbie-container {
       transition: all 0.2s ease;
       z-index: 10;
     }
 
-    /* VYSKAKOVACIE OKNO (MODAL) - ZVÄČŠENÉ PRE VYSOKÚ KVALITU FOTIEK */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -238,7 +222,7 @@
     <div id="screen-dinner" class="screen">
       <h2>Čo by si si dala na jedlo? 🍷</h2>
       <p>Zadaj, čo máš najradšej:</p>
-      <input type="text" id="food-preference" class="text-input" placeholder="Napr. Sviečková, Pizza..." value="Sushi">
+      <input type="text" id="food-preference" class="text-input" placeholder="Napr. Sviečková, Pizza, Sushi...">
       <button class="btn" style="margin-top:20px;" onclick="saveFoodChoice('btn-dinner')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
@@ -246,7 +230,7 @@
     <div id="screen-cake" class="screen">
       <h2>Aký narodeninový koláč? 🎂</h2>
       <p>Zadaj, aký chceš koláč:</p>
-      <input type="text" id="cake-preference" class="text-input" placeholder="Napr. Makrónky, Cheesecake..." value="Makrónka">
+      <input type="text" id="cake-preference" class="text-input" placeholder="Napr. Makrónky, Cheesecake, Torta...">
       <button class="btn" style="margin-top:20px;" onclick="saveCakeChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
@@ -268,14 +252,14 @@
     <div id="screen-trip" class="screen">
       <h2>Cieľ dobrodružstva 🌲🏞️</h2>
       <p>Kam vyrazíme na výlet?</p>
-      <input type="text" id="trip-preference" class="text-input" placeholder="Napr. Do prírody, na hrad..." value="Tajný výlet">
+      <input type="text" id="trip-preference" class="text-input" placeholder="Napr. Do prírody, na hrad, k moru...">
       <button class="btn" style="margin-top:20px;" onclick="saveTripChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- 3. ZÁVEREČNÁ OBRAZOVKA: Výber vozidla s fotkami -->
+    <!-- 3. ZÁVEREČNÁ OBRAZOVKA: Zážitková jazda -->
     <div id="screen-final" class="screen">
       <h2>Tvoj Narodeninový Plán je hotový! ✨</h2>
-      <p><strong>Zvoľte vaše vozidlo:</strong> 🚗</p>
+      <p><strong>Zvoľte zážitkovú jazdu:</strong> 🏎️✨</p>
 
       <form id="birthdayForm" action="https://formspree.io/f/myezoola" method="POST">
         <input type="hidden" name="Film" id="input-movie">
@@ -285,26 +269,21 @@
         <input type="hidden" name="Vylet" id="input-trip">
         <input type="hidden" name="Vozidlo" id="input-car">
 
-        <!-- GRID SO 2 AUTAMI A FOTKAMI -->
         <div class="cars-grid">
           <div class="car-card">
-            <img src="fabia.jpg" alt="Pistáciová Fabia">
+            <img src="fabia.png" alt="Pistáciová Fabia">
             <button type="button" class="btn" style="background-color: #2ec4b6; font-size: 15px; padding: 10px;" onclick="handleCarSelection('Pistáciová Fabia')">💚 Pistáciová Fabia</button>
           </div>
 
           <div class="car-card">
-            <img src="smart.jpg" alt="Smart">
+            <img src="smart.jpeg" alt="Smart">
             <button type="button" class="btn" style="background-color: #ff9f1c; font-size: 15px; padding: 10px;" onclick="handleCarSelection('Smart')">🚗 Smart</button>
           </div>
-        </div>
-
-        <div class="final-btn-container">
-          <button type="button" id="noBtn" class="btn" onmouseover="moveButton()" onclick="moveButton()">NIE 😜</button>
         </div>
       </form>
     </div>
 
-    <!-- POTVRDENIE O ODOSLANÍ (KONEČNÁ FOTKA) -->
+    <!-- POTVRDENIE O ODOSLANÍ -->
     <div id="screen-success" class="screen">
       <img src="jazda.jpg" alt="To bola jízda" class="intro-img">
       <h2 style="margin-top:15px;">To bola jízda! 🚀🎉</h2>
@@ -333,13 +312,11 @@
       document.getElementById(screenId).classList.add('active');
     }
 
-    // 1. Úvodný pop-up
     function startPlanner() {
       isIntroModal = true;
       showModal('uvod2.jpg', 'Bude to dobrodružstvo 🚀', 'Zahájiť dobrodružstvo', null);
     }
 
-    // Funkcia na zobrazenie modálneho okna
     function showModal(imageSrc, text, btnText, buttonId) {
       pendingButtonId = buttonId;
       document.getElementById('modal-img').src = imageSrc;
@@ -359,14 +336,13 @@
         saveChoice(pendingButtonId);
       } else if (isCarModal) {
         isCarModal = false;
-        submitBirthdayForm(); // Odoslanie po kliknutí na Dacia pop-up
+        submitBirthdayForm();
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
       }
     }
 
-    // Barbie uskakuje
     function moveBarbie() {
       const barbie = document.getElementById('barbie-container');
       const x = Math.random() * (window.innerWidth - barbie.offsetWidth - 40);
@@ -377,45 +353,37 @@
       barbie.style.top = `${Math.max(20, y)}px`;
     }
 
-    // Miznutie "Masáž všetkého"
     function hideAllMassage() {
       document.getElementById('all-massage-btn').style.display = 'none';
     }
 
-    // FILM
     function saveMovieChoice(buttonId) {
       showModal('film.jpg', 'Aj tak sa pozrieme na obe.', '😉', buttonId);
     }
 
-    // JEDLO (Koláž)
     function saveFoodChoice(buttonId) {
       showModal('kolaz.jpg', 'Aj tak dáme sushi v Českej Lípe! 🍣😋', 'Super! 😋', buttonId);
     }
 
-    // KOLÁČ
     function saveCakeChoice(buttonId) {
       showModal('kolac.png', 'Ja viem, že chceš ten jeden', 'Makrónka 🧁', buttonId);
     }
 
-    // RELAX
     function saveRelaxChoice(buttonId) {
       showModal('relax.jpg', 'Bude všetko, ale asi nie na jeden ťah 😉', '😘', buttonId);
     }
 
-    // VÝLET
     function saveTripChoice(buttonId) {
       isTripModal = true;
       showModal('vylet.jpg', 'Ideme objavovať svet! 🗺️✨', 'Ísť na finále 🚀', buttonId);
     }
 
-    // VOZIDLO - Spracovanie výberu auta
     function handleCarSelection(carName) {
       document.getElementById('input-car').value = carName;
       isCarModal = true;
-      showModal('auto.jpg', 'Je to jedno, aj tak Dacia to zachráni! 🚗💨', 'Súhlasím! 🚀', null);
+      showModal('auto.jpeg', 'Je to jedno, aj tak Dacia to zachráni! 🚗💨', 'Súhlasím! 🚀', null);
     }
 
-    // Uloženie výberu a skrytie tlačidla z rozcestníka
     function saveChoice(buttonId) {
       const btn = document.getElementById(buttonId);
       if (btn && btn.style.display !== 'none') {
@@ -431,27 +399,14 @@
       }
     }
 
-    // Zozbieranie údajov
     function collectData() {
       document.getElementById('input-movie').value = 'Pán prsteňov + Barbie film';
-      document.getElementById('input-dinner').value = 'Sushi v Českej Lípe (Zadané: ' + (document.getElementById('food-preference').value || 'Nič') + ')';
-      document.getElementById('input-cake').value = 'Makrónka (Zadané: ' + (document.getElementById('cake-preference').value || 'Nič') + ')';
+      document.getElementById('input-dinner').value = document.getElementById('food-preference').value || 'Nezadané';
+      document.getElementById('input-cake').value = document.getElementById('cake-preference').value || 'Nezadané';
       document.getElementById('input-massage').value = document.querySelector('input[name="massage"]:checked')?.value || 'Masáž všetkého';
-      document.getElementById('input-trip').value = document.getElementById('trip-preference').value || 'Tajný výlet';
+      document.getElementById('input-trip').value = document.getElementById('trip-preference').value || 'Nezadané';
     }
 
-    // Utekajúce NIE
-    function moveButton() {
-      const noBtn = document.getElementById('noBtn');
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
-
-      noBtn.style.position = 'fixed';
-      noBtn.style.left = `${Math.max(20, x)}px`;
-      noBtn.style.top = `${Math.max(20, y)}px`;
-    }
-
-    // Samotné odoslanie formulára na Formspree
     async function submitBirthdayForm() {
       const form = document.getElementById('birthdayForm');
       const data = new FormData(form);
