@@ -221,7 +221,6 @@
     <!-- KATEGÓRIA 2: JEDLO -->
     <div id="screen-dinner" class="screen">
       <h2>Čo by si si dala na jedlo? 🍷</h2>
-      <p>Zadaj, čo máš najradšej:</p>
       <input type="text" id="food-preference" class="text-input" placeholder="Napr. Sviečková, Pizza, Sushi...">
       <button class="btn" style="margin-top:20px;" onclick="saveFoodChoice('btn-dinner')">Uložiť a vrátiť sa ↩️</button>
     </div>
@@ -229,14 +228,13 @@
     <!-- KATEGÓRIA 3: KOLÁČ -->
     <div id="screen-cake" class="screen">
       <h2>Aký narodeninový koláč? 🎂</h2>
-      <p>Zadaj, aký chceš koláč:</p>
       <input type="text" id="cake-preference" class="text-input" placeholder="Napr. Makrónky, Cheesecake, Torta...">
       <button class="btn" style="margin-top:20px;" onclick="saveCakeChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
     <!-- KATEGÓRIA 4: RELAX -->
     <div id="screen-massage" class="screen">
-      <h2>Aké relaxačné combo? 💆‍♀️️</h2>
+      <h2>Aké relaxačné combo? 💆‍♀️</h2>
       <div class="option-list">
         <label class="option-item"><input type="radio" name="massage" value="Masáž chrbta" checked> Masáž chrbta</label>
         <label class="option-item"><input type="radio" name="massage" value="Masáž hlavy"> Masáž hlavy</label>
@@ -251,7 +249,6 @@
     <!-- KATEGÓRIA 5: VÝLET -->
     <div id="screen-trip" class="screen">
       <h2>Cieľ dobrodružstva 🌲🏞️</h2>
-      <p>Kam vyrazíme na výlet?</p>
       <input type="text" id="trip-preference" class="text-input" placeholder="Napr. Do prírody, na hrad, k moru...">
       <button class="btn" style="margin-top:20px;" onclick="saveTripChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
     </div>
@@ -336,7 +333,7 @@
         saveChoice(pendingButtonId);
       } else if (isCarModal) {
         isCarModal = false;
-        submitBirthdayForm(); // Priamo odošle formulár a zobrazí finálnu obrazovku!
+        submitBirthdayForm();
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
