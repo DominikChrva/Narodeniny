@@ -174,7 +174,7 @@
       <button class="btn" onclick="startPlanner()">Poďme to zistiť! 🚀</button>
     </div>
 
-    <!-- 2. OBRAZOVKA: Hlavný rozcestník -->
+    <!-- 2. OBRAZOVKA: Hlavný rozcestník (5 sekcií) -->
     <div id="screen-hub" class="screen">
       <h2>Vyber si kategóriu 🎯</h2>
       <p id="hub-desc">Klikni na položku a zvoľ si svoju preferenciu:</p>
@@ -183,6 +183,7 @@
         <button id="btn-dinner" class="btn" onclick="showScreen('screen-dinner')">🍕 Jedlo</button>
         <button id="btn-cake" class="btn" onclick="showScreen('screen-cake')">🍰 Koláč</button>
         <button id="btn-massage" class="btn" onclick="showScreen('screen-massage')">💆‍♂️ Masáž</button>
+        <button id="btn-trip" class="btn" onclick="showScreen('screen-trip')">🗺️ Výlet</button>
       </div>
     </div>
 
@@ -220,7 +221,7 @@
         <label class="option-item"><input type="radio" name="cake" value="Tradičná torta"> Tradičná torta od babky/cukrára</label>
         <label class="option-item"><input type="radio" name="cake" value="Veterníky/Minitorty"> Zákusky / Veterníky</label>
       </div>
-      <button class="btn" onclick="saveChoice('btn-cake')">Uložiť a vrátiť sa ↩️️</button>
+      <button class="btn" onclick="saveChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
     <!-- KATEGÓRIA 4: MASÁŽ -->
@@ -235,17 +236,30 @@
       <button class="btn" onclick="saveChoice('btn-massage')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- 3. ZÁVEREČNÁ OBRAZOVKA (So spoločnými výsledkami a uskakujúcim tlačidlom) -->
+    <!-- KATEGÓRIA 5: VÝLET -->
+    <div id="screen-trip" class="screen">
+      <h2>Kam vyrazíme na výlet? 🌲🏞️</h2>
+      <div class="option-list">
+        <label class="option-item"><input type="radio" name="trip" value="Prechádzka v prírode" checked> Prechádzka v prírode / Vyhliadka</label>
+        <label class="option-item"><input type="radio" name="trip" value="Návšteva hrady/zámku"> Návšteva hradu alebo zámku</label>
+        <label class="option-item"><input type="radio" name="trip" value="Wellness & Spa deň"> Wellness & Spa oddych</label>
+        <label class="option-item"><input type="radio" name="trip" value="Mestský trip & kaviarničky"> Mestský trip & kaviarničky</label>
+      </div>
+      <button class="btn" onclick="saveChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
+    </div>
+
+    <!-- 3. ZÁVEREČNÁ OBRAZOVKA -->
     <div id="screen-final" class="screen">
       <h2>Tvoj Narodeninový Plán je hotový! ✨</h2>
       <p>Vybral/a si si úžasné combo. Súhlasíš s tým, že takto prežijeme tvoj deň?</p>
 
       <form id="birthdayForm" action="https://formspree.io/f/myezoola" method="POST">
-        <!-- Skryté vstupy, do ktorých sa zapíšu vybrané odpovede -->
+        <!-- Skryté vstupy na odoslanie -->
         <input type="hidden" name="Film" id="input-movie">
         <input type="hidden" name="Jedlo" id="input-dinner">
         <input type="hidden" name="Kolac" id="input-cake">
         <input type="hidden" name="Masaz" id="input-massage">
+        <input type="hidden" name="Vylet" id="input-trip">
 
         <div class="final-btn-container">
           <button type="submit" id="yesBtn" class="btn">ÁNO, beriem! 😍</button>
@@ -272,7 +286,7 @@
   </div>
 
   <script>
-    let remainingCategories = 4;
+    let remainingCategories = 5; // Terraz máme 5 kategórií
     let pendingButtonId = null;
     let isIntroModal = false;
 
@@ -282,11 +296,11 @@
       document.getElementById(screenId).classList.add('active');
     }
 
-    // Úvodné tlačidlo - zobrazí fotku a pripraví prechod na rozcestník
+    // Úvodné tlačidlo - zobrazí fotku a napíše "Začína dobrodružstvo"
     function startPlanner() {
-      // TU ZMEŇ NÁZOV SÚBORU FOTKY (napr. 'uvod.jpg' alebo internetovú URL)
+      // Ak nahráš fotku na GitHub, zmeň napr. na 'uvod.jpg'
       const imgUrl = 'uvod.jpg'; 
-      const text = 'Priprav sa, dnes to bude jazda! 🚀🔥';
+      const text = 'Začína dobrodružstvo 🚀🔥';
       
       isIntroModal = true;
       showModal(imgUrl, text, null);
@@ -361,6 +375,7 @@
       document.getElementById('input-dinner').value = 'Sushi v Českej Lípe (Pôvodne zadané: ' + (document.getElementById('food-preference').value || 'Nič') + ')';
       document.getElementById('input-cake').value = document.querySelector('input[name="cake"]:checked')?.value || 'Nezvolené';
       document.getElementById('input-massage').value = document.querySelector('input[name="massage"]:checked')?.value || 'Nezvolené';
+      document.getElementById('input-trip').value = document.querySelector('input[name="trip"]:checked')?.value || 'Nezvolené';
     }
 
     // Funkcia pre utekajúce tlačidlo NIE na konci
