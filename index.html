@@ -175,7 +175,8 @@
     <!-- 1. OBRAZOVKA: Úvod -->
     <div id="screen-intro" class="screen active">
       <h1>Ako prežijeme tvoj narodeninový deň? 🎂🎈</h1>
-      <img src="uvod1.jpg" alt="Úvodná fotka" class="intro-img">
+      <!-- ZMENENÉ NA .JPG s veľkými písmenami -->
+      <img src="uvod1.JPG" alt="Úvodná fotka" class="intro-img">
       <button class="btn" onclick="startPlanner()">Poďme to spolu zistiť! 🚀</button>
     </div>
 
@@ -351,9 +352,9 @@
       showModal('kolaz.jpg', 'Aj tak dáme sushi v Českej Lípe! 🍣😋', 'Super! 😋', buttonId);
     }
 
-    // KOLÁČ
+    // KOLÁČ (ZMENENÉ NA kolac.png)
     function saveCakeChoice(buttonId) {
-      showModal('kolac.jpg', 'Ja viem, že chceš ten jeden', 'Makrónka 🧁', buttonId);
+      showModal('kolac.png', 'Ja viem, že chceš ten jeden', 'Makrónka 🧁', buttonId);
     }
 
     // RELAX
@@ -361,10 +362,10 @@
       showModal('relax.jpg', 'Bude všetko, ale asi nie na jeden ťah 😉', '😘', buttonId);
     }
 
-    // VÝLET (GIF)
+    // VÝLET
     function saveTripChoice(buttonId) {
       isTripModal = true;
-      showModal('vylet.gif', 'Ideme objavovať svet! 🗺️✨', 'Ísť na finále 🚀', buttonId);
+      showModal('vylet.jpg', 'Ideme objavovať svet! 🗺️✨', 'Ísť na finále 🚀', buttonId);
     }
 
     // Uloženie výberu a skrytie tlačidla z rozcestníka
