@@ -112,19 +112,16 @@
     }
     .final-btn-container {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
       min-height: 50px;
-    }
-    #yesBtn {
-      background-color: #2ec4b6;
-      width: auto;
+      position: relative;
     }
     #noBtn {
       background-color: #ff2052;
-      width: auto;
-      position: absolute;
+      width: 100%;
+      margin-top: 10px;
     }
     #barbie-container {
       transition: all 0.2s ease;
@@ -175,7 +172,6 @@
     <!-- 1. OBRAZOVKA: Úvod -->
     <div id="screen-intro" class="screen active">
       <h1>Ako prežijeme tvoj narodeninový deň? 🎂🎈</h1>
-      <!-- ZMENENÉ NA .JPG s veľkými písmenami -->
       <img src="uvod1.JPG" alt="Úvodná fotka" class="intro-img">
       <button class="btn" onclick="startPlanner()">Poďme to spolu zistiť! 🚀</button>
     </div>
@@ -226,7 +222,7 @@
       <button class="btn" style="margin-top:20px;" onclick="saveCakeChoice('btn-cake')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- KATEGÓRIA 4: RELAX (MASÁŽ) -->
+    <!-- KATEGÓRIA 4: RELAX -->
     <div id="screen-massage" class="screen">
       <h2>Aké relaxačné combo? 💆‍♀️</h2>
       <div class="option-list">
@@ -248,10 +244,10 @@
       <button class="btn" style="margin-top:20px;" onclick="saveTripChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- 3. ZÁVEREČNÁ OBRAZOVKA -->
+    <!-- 3. ZÁVEREČNÁ OBRAZOVKA: Výber vozidla -->
     <div id="screen-final" class="screen">
       <h2>Tvoj Narodeninový Plán je hotový! ✨</h2>
-      <p>Vybral/a si si úžasné combo. Súhlasíš s tým, že takto prežijeme tvoj deň?</p>
+      <p><strong>Zvoľte vaše vozidlo:</strong> 🚗</p>
 
       <form id="birthdayForm" action="https://formspree.io/f/myezoola" method="POST">
         <input type="hidden" name="Film" id="input-movie">
@@ -259,18 +255,20 @@
         <input type="hidden" name="Kolac" id="input-cake">
         <input type="hidden" name="Relax" id="input-massage">
         <input type="hidden" name="Vylet" id="input-trip">
+        <input type="hidden" name="Vozidlo" id="input-car">
 
         <div class="final-btn-container">
-          <button type="submit" id="yesBtn" class="btn">ÁNO, beriem! 😍</button>
+          <button type="button" class="btn" style="background-color: #2ec4b6;" onclick="handleCarSelection('Pistáciová Fabia')">💚 Pistáciová Fabia</button>
+          <button type="button" class="btn" style="background-color: #ff9f1c;" onclick="handleCarSelection('Smart')">🚗 Smart</button>
           <button type="button" id="noBtn" class="btn" onmouseover="moveButton()" onclick="moveButton()">NIE 😜</button>
         </div>
       </form>
     </div>
 
-    <!-- POTVRDENIE O ODOSLANÍ -->
+    <!-- POTVRDENIE O ODOSLANÍ (KONEČNÁ FOTKA) -->
     <div id="screen-success" class="screen">
-      <h2>JÚÚÚŠ! 🎉💖</h2>
-      <p>Tvoj narodeninový plán bol úspešne odoslaný. Už sa neviem dočkať!</p>
+      <img src="jazda.jpg" alt="To bola jízda" class="intro-img">
+      <h2 style="margin-top:15px;">To bola jízda! 🚀🎉</h2>
     </div>
 
   </div>
@@ -289,6 +287,7 @@
     let pendingButtonId = null;
     let isIntroModal = false;
     let isTripModal = false;
+    let isCarModal = false;
 
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -319,6 +318,9 @@
       } else if (isTripModal) {
         isTripModal = false;
         saveChoice(pendingButtonId);
+      } else if (isCarModal) {
+        isCarModal = false;
+        submitBirthdayForm(); // Odoslanie formulára až po kliknutí na pop-up s Daciou
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
@@ -338,8 +340,7 @@
 
     // Miznutie "Masáž všetkého"
     function hideAllMassage() {
-      const btn = document.getElementById('all-massage-btn');
-      btn.style.display = 'none';
+      document.getElementById('all-massage-btn').style.display = 'none';
     }
 
     // FILM
@@ -352,7 +353,7 @@
       showModal('kolaz.jpg', 'Aj tak dáme sushi v Českej Lípe! 🍣😋', 'Super! 😋', buttonId);
     }
 
-    // KOLÁČ (ZMENENÉ NA kolac.png)
+    // KOLÁČ
     function saveCakeChoice(buttonId) {
       showModal('kolac.png', 'Ja viem, že chceš ten jeden', 'Makrónka 🧁', buttonId);
     }
@@ -366,6 +367,13 @@
     function saveTripChoice(buttonId) {
       isTripModal = true;
       showModal('vylet.jpg', 'Ideme objavovať svet! 🗺️✨', 'Ísť na finále 🚀', buttonId);
+    }
+
+    // VOZIDLO - Spracovanie výberu auta
+    function handleCarSelection(carName) {
+      document.getElementById('input-car').value = carName;
+      isCarModal = true;
+      showModal('auto.jpg', 'Je to jedno, aj tak Dacia to zachráni! 🚗💨', 'Súhlasím! 🚀', null);
     }
 
     // Uloženie výberu a skrytie tlačidla z rozcestníka
@@ -404,10 +412,9 @@
       noBtn.style.top = `${Math.max(20, y)}px`;
     }
 
-    // Formspree odoslanie
-    const form = document.getElementById('birthdayForm');
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
+    // Samotné odoslanie formulára na Formspree
+    async function submitBirthdayForm() {
+      const form = document.getElementById('birthdayForm');
       const data = new FormData(form);
       
       const response = await fetch(form.action, {
@@ -420,8 +427,9 @@
         showScreen('screen-success');
       } else {
         alert('Ups, vyskytla sa chyba, ale aj tak s plánom počítam!');
+        showScreen('screen-success'); // Zobrazí záver aj v prípade chyby siete
       }
-    });
+    }
   </script>
 
 </body>
