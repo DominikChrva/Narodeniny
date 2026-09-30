@@ -25,15 +25,16 @@
       border-radius: 24px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       text-align: center;
-      max-width: 450px;
+      max-width: 480px;
       width: 100%;
       position: relative;
       transition: all 0.3s ease;
     }
+    /* PLNÁ KVALITA A OSTRÝ ZOBRAZ PRE OBRÁZKY */
     .card img.intro-img {
       width: 100%;
-      max-height: 250px;
-      object-fit: cover;
+      max-height: 320px;
+      object-fit: contain;
       border-radius: 16px;
       margin: 15px 0 20px 0;
     }
@@ -110,11 +111,38 @@
     .text-input:focus {
       border-color: #ff4d6d;
     }
+
+    /* MIEŠKA PRE VÝBER VOZIDIEL (2 STĹPCE) */
+    .cars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .car-card {
+      border: 2px solid #ffe6e6;
+      border-radius: 16px;
+      padding: 10px;
+      background: #fff0f3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .car-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+
     .final-btn-container {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 10px;
       min-height: 50px;
       position: relative;
     }
@@ -128,7 +156,7 @@
       z-index: 10;
     }
 
-    /* VYSKAKOVACIE OKNO (MODAL) */
+    /* VYSKAKOVACIE OKNO (MODAL) - ZVÄČŠENÉ PRE VYSOKÚ KVALITU FOTIEK */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -136,8 +164,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -147,15 +175,15 @@
       padding: 25px;
       border-radius: 20px;
       text-align: center;
-      max-width: 360px;
+      max-width: 420px;
       width: 90%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       animation: popIn 0.3s ease;
     }
     .modal-card img {
       width: 100%;
-      max-height: 230px;
-      object-fit: cover;
+      max-height: 320px;
+      object-fit: contain;
       border-radius: 14px;
       margin-bottom: 15px;
     }
@@ -244,7 +272,7 @@
       <button class="btn" style="margin-top:20px;" onclick="saveTripChoice('btn-trip')">Uložiť a vrátiť sa ↩️</button>
     </div>
 
-    <!-- 3. ZÁVEREČNÁ OBRAZOVKA: Výber vozidla -->
+    <!-- 3. ZÁVEREČNÁ OBRAZOVKA: Výber vozidla s fotkami -->
     <div id="screen-final" class="screen">
       <h2>Tvoj Narodeninový Plán je hotový! ✨</h2>
       <p><strong>Zvoľte vaše vozidlo:</strong> 🚗</p>
@@ -257,9 +285,20 @@
         <input type="hidden" name="Vylet" id="input-trip">
         <input type="hidden" name="Vozidlo" id="input-car">
 
+        <!-- GRID SO 2 AUTAMI A FOTKAMI -->
+        <div class="cars-grid">
+          <div class="car-card">
+            <img src="fabia.jpg" alt="Pistáciová Fabia">
+            <button type="button" class="btn" style="background-color: #2ec4b6; font-size: 15px; padding: 10px;" onclick="handleCarSelection('Pistáciová Fabia')">💚 Pistáciová Fabia</button>
+          </div>
+
+          <div class="car-card">
+            <img src="smart.jpg" alt="Smart">
+            <button type="button" class="btn" style="background-color: #ff9f1c; font-size: 15px; padding: 10px;" onclick="handleCarSelection('Smart')">🚗 Smart</button>
+          </div>
+        </div>
+
         <div class="final-btn-container">
-          <button type="button" class="btn" style="background-color: #2ec4b6;" onclick="handleCarSelection('Pistáciová Fabia')">💚 Pistáciová Fabia</button>
-          <button type="button" class="btn" style="background-color: #ff9f1c;" onclick="handleCarSelection('Smart')">🚗 Smart</button>
           <button type="button" id="noBtn" class="btn" onmouseover="moveButton()" onclick="moveButton()">NIE 😜</button>
         </div>
       </form>
@@ -320,7 +359,7 @@
         saveChoice(pendingButtonId);
       } else if (isCarModal) {
         isCarModal = false;
-        submitBirthdayForm(); // Odoslanie formulára až po kliknutí na pop-up s Daciou
+        submitBirthdayForm(); // Odoslanie po kliknutí na Dacia pop-up
       } else if (pendingButtonId) {
         saveChoice(pendingButtonId);
         pendingButtonId = null;
@@ -427,7 +466,7 @@
         showScreen('screen-success');
       } else {
         alert('Ups, vyskytla sa chyba, ale aj tak s plánom počítam!');
-        showScreen('screen-success'); // Zobrazí záver aj v prípade chyby siete
+        showScreen('screen-success');
       }
     }
   </script>
