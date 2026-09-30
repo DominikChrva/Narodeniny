@@ -125,6 +125,42 @@
       transition: all 0.2s ease;
       z-index: 10;
     }
+
+    /* VLASTNÉ VYSKAKOVACIE OKNO (MODAL) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 360px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: popIn 0.3s ease;
+    }
+    .modal-card img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 15px;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -226,13 +262,40 @@
 
   </div>
 
+  <!-- VYSKAKOVACIE OKNO NAVYŠE (MODAL) -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-card">
+      <img id="modal-img" src="" alt="Obrázok">
+      <h3 id="modal-text" style="color:#ff4d6d; margin-bottom:20px;"></h3>
+      <button class="btn" onclick="closeModal()">Rozumiem! 👍</button>
+    </div>
+  </div>
+
   <script>
     let remainingCategories = 4;
+    let pendingButtonId = null;
 
     // Funkcia na prepínanie obrazoviek
     function showScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
+    }
+
+    // Funkcia pre zobrazenie vlastného pop-up okna
+    function showModal(imageSrc, text, buttonId) {
+      pendingButtonId = buttonId;
+      document.getElementById('modal-img').src = imageSrc;
+      document.getElementById('modal-text').innerText = text;
+      document.getElementById('custom-modal').style.display = 'flex';
+    }
+
+    // Zavretie pop-upu a uloženie voľby
+    function closeModal() {
+      document.getElementById('custom-modal').style.display = 'none';
+      if (pendingButtonId) {
+        saveChoice(pendingButtonId);
+        pendingButtonId = null;
+      }
     }
 
     // Uskakujúci Barbie film
@@ -246,16 +309,18 @@
       barbie.style.top = `${Math.max(20, y)}px`;
     }
 
-    // Špeciálne uloženie pre FILM
+    // Špeciálne uloženie pre FILM (s fotkou / GIFom)
     function saveMovieChoice(buttonId) {
-      alert('Šak vieš, že si pozrieme oboje! 😉🎬');
-      saveChoice(buttonId);
+      const imgUrl = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzE1YzhhNGsyeGs2dnRwYjA3dXg3ZjFqYWk3MXMwa282ZXBsa2Y0OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif';
+      const text = 'Šak vieš, že si pozrieme oboje! 😉🎬';
+      showModal(imgUrl, text, buttonId);
     }
 
-    // Špeciálne uloženie pre JEDLO
+    // Špeciálne uloženie pre JEDLO (s fotkou sushi)
     function saveFoodChoice(buttonId) {
-      alert('Aj tak dáme sushi v Českej Lípe! 🍣😋');
-      saveChoice(buttonId);
+      const imgUrl = 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500';
+      const text = 'Aj tak dáme sushi v Českej Lípe! 🍣😋';
+      showModal(imgUrl, text, buttonId);
     }
 
     // Uloženie výberu a skrytie tlačidla z hlavného menu
